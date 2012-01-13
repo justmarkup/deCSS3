@@ -71,12 +71,12 @@ var deCSS3 = {
             repl     : 'column-count: 1;'
           },
           rgba   : {
-            regex    : /(A-z|-)?color:rgba\((.*?)\)\;/g,
+            regex    : /((background-)?color:)?([\s]+)?rgba\((.*?)\)/g,
             sentinel : 'rgba',
             repl     : ''
           },
           hsla   : {
-            rregex    : /(A-z|-)?color:hsla\((.*?)\)\;/g,
+            regex    : /((background-)?color:)?([\s]+)?rgba\((.*?)\)/g,
             sentinel : 'hsla',
             repl     : ''
           },
