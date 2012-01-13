@@ -71,14 +71,14 @@ var deCSS3 = {
             repl     : 'column-count: 1;'
           },
           rgba   : {
-            regex    : /rgba\((.*?)\)\;/g,
+            regex    : /(A-z|-)?color:rgba\((.*?)\)\;/g,
             sentinel : 'rgba',
-            repl     : 'rgba();'
+            repl     : ''
           },
           hsla   : {
-            regex    : /hsla\((.*?)\)\;/g,
+            rregex    : /(A-z|-)?color:hsla\((.*?)\)\;/g,
             sentinel : 'hsla',
-            repl     : 'hsla();'
+            repl     : ''
           },
           linear : {
             regex    : /linear-gradient\((.*?)\)\;/g,
