@@ -95,35 +95,33 @@ var deCSS3 = {
         };
 
     // Go through each stylesheet and return an array of new rules for each, then convert to string
-    [].forEach.call( document.styleSheets, function ( stylesheet ) {
+    [].forEach.call( document.querySelectorAll('style'), function ( stylesheet ) {
       var newRules = "",
           oldRules = "",
           stylePlaceholder = document.createElement( 'div' ),
           appendStyle = document.createElement( 'style' );
 
       // Bail if there are no styles
-      if ( ! stylesheet.cssRules ) {
+      if ( ! stylesheet.textContent ) {
         return;
       }
 
       // Find the rules we want to delete
-      [].forEach.call( stylesheet.cssRules, function ( rule, idx ) {
-        var ruleText = rule.cssText,
-            found    = ruleText.match( rFound ),
-            i, ruleSet;
+		  var ruleText = stylesheet.textContent,
+		      found    = ruleText.match( rFound ),
+		      i, ruleSet;
 
-        oldRules += ruleText;
-        newRule = ruleText;
+		  oldRules += ruleText;
+		  newRule = ruleText;
 
-        // Loop through each rule set and apply it to this css rule
-        for ( i in ruleSets ) {
-          ruleSet = ruleSets[ i ];
-          newRule = ruleReplacer( found, newRule, ruleSet.sentinel, ruleSet.regex, ruleSet.repl );
-        }
+		  // Loop through each rule set and apply it to this css rule
+		  for ( i in ruleSets ) {
+		    ruleSet = ruleSets[ i ];
+		    newRule = ruleReplacer( found, newRule, ruleSet.sentinel, ruleSet.regex, ruleSet.repl );
+		  }
 
-        // Add to rule list
-        newRules += newRule;
-      });
+      // Add to rule list
+      newRules += newRule;
 
       // Create a placeholder element to hold the old rules
       stylePlaceholder.className = 'deCSS3-Placeholder';
@@ -135,11 +133,11 @@ var deCSS3 = {
       appendStyle.textContent = newRules;
 
       // Inject the new style
-      stylesheet.ownerNode.parentNode.insertBefore( appendStyle, stylesheet.ownerNode );
+      stylesheet.parentNode.insertBefore( appendStyle, stylesheet );
       // Inject the placeholder style (to maintain order)
-      stylesheet.ownerNode.parentNode.insertBefore( stylePlaceholder, stylesheet.ownerNode );
+      stylesheet.parentNode.insertBefore( stylePlaceholder, stylesheet );
       // delete the old one
-      stylesheet.ownerNode.parentNode.removeChild( stylesheet.ownerNode );
+      stylesheet.parentNode.removeChild( stylesheet );
 
       // Just in case
       if ( stylesheet ) {
